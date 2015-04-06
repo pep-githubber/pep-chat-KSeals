@@ -1,4 +1,4 @@
-from datetime import datetime
+rom datetime import datetime
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 
@@ -20,13 +20,12 @@ def ReadRemarks(user_id):
 
   LogLastGet(user_id)
 
-  remark_infos = []
-  for remark in Remark.query(
-      Remark.timestamp >= start_time).order(Remark.timestamp).fetch():
-    user = remark.user
-    text = remark.text
-    color = 'orange'  # TODO(pep-students) Make messages appear a random color.
-    remark_infos.append((user, text, color))
+  # TODO(pep-students) Make messages appear a random color.
+  remark_infos = [
+      (remark.user, remark.text, 'orange')
+      for remark
+          in Remark.query(
+          Remark.timestamp >= start_time).order(Remark.timestamp).fetch()]
   return remark_infos
 
 
